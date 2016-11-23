@@ -16,7 +16,7 @@ class PostfixHierarchyUI(object):
                         pc.menuItem(label='low')
                         pc.menuItem(label='high')
                         pc.menuItem(label='custom')
-                    self.customText = pc.textField(text='high')
+                    self.customText = pc.textField(text='')
 
                 self.doButton = pc.button('Apply Postfix', c=self.do)
         self.customText.setEnable(False)
@@ -26,7 +26,6 @@ class PostfixHierarchyUI(object):
 
     def do(self, *args):
         postfix = self.postfixOption.getValue()
-        postfix.replace(' ', '_')
         if postfix == 'custom':
             postfix = self.customText.getText().strip().strip('_')
         postfixHierarchy(word=postfix, hier=self.hierBox.getValue())
@@ -40,6 +39,9 @@ class PostfixHierarchyUI(object):
 
 def postfixHierarchy(word='low', sep='_', hier=False):
     for node in pc.ls(sl=1, dag=hier, type='transform'):
+        word.strip()
+        word.replace(' ', '_')
+        word.strip('_')
         name = node.name()
         parents = name.split('|')
         splits = parents[-1].split('_')
