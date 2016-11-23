@@ -1,4 +1,5 @@
-from . import postfixHierarchy
+from . import _postfix
+reload(_postfix)
 
-Window = postfixHierarchy.PostfixHierarchyUI
-applyPostfix = postfixHierarchy.postfixHierarchy
+Window = _postfix.PostfixHierarchyUI
+applyPostfix = _postfix.postfixHierarchy
