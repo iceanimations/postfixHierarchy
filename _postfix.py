@@ -26,9 +26,9 @@ class PostfixHierarchyUI(object):
 
     def do(self, *args):
         postfix = self.postfixOption.getValue()
+        postfix.replace(' ', '_')
         if postfix == 'custom':
             postfix = self.customText.getText().strip().strip('_')
-        postfix.replace(' ', '_')
         postfixHierarchy(word=postfix, hier=self.hierBox.getValue())
 
     def changeOption(self, *args):
