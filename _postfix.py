@@ -47,7 +47,8 @@ def postfixHierarchy(word='low', sep='_', hier=False):
             splits.pop()
             parents[-1] = '_'.join(splits)
             name = '|'.join(parents)
-        node.rename(name + sep + word)
+        if word:
+            node.rename(name + sep + word)
 
 if __name__ == "__main__":
     PostfixHierarchyUI()
