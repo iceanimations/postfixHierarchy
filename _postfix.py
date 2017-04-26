@@ -26,9 +26,13 @@ class PostfixHierarchyUI(object):
 
     def do(self, *args):
         postfix = self.postfixOption.getValue()
+        custom_postfix = self.customText.getText().strip().strip('_')
         if postfix == 'custom':
-            postfix = self.customText.getText().strip().strip('_')
-        postfixHierarchy(word=postfix, hier=self.hierBox.getValue())
+            postfix = custom_postfix
+        rep = list(replaceable_words)
+        rep.append(custom_postfix)
+        postfixHierarchy(word=postfix, hier=self.hierBox.getValue(),
+                replaceable_words=custom_postfix)
 
     def changeOption(self, *args):
         if self.postfixOption.getValue() == 'custom':
@@ -37,16 +41,20 @@ class PostfixHierarchyUI(object):
             self.customText.setEnable(False)
 
 
-def postfixHierarchy(word='low', sep='_', hier=False):
+replaceable_words = ( 'high', 'low' )
+def postfixHierarchy(word='low', sep='_', hier=False,
+        replaceable_words=replaceable_words):
     for node in pc.ls(sl=1, dag=hier, type='transform'):
         word.strip()
         word.replace(' ', '_')
         word.strip('_')
         name = node.name()
         parents = name.split('|')
-        splits = parents[-1].split('_')
+        splits = parents[-1].split(sep)
         if len(splits) >= 2:
-            splits.pop()
+            last_word = splits[-1]
+            if replaceable_words is None or last_word in replaceable_words:
+                splits.pop()
             parents[-1] = '_'.join(splits)
             name = '|'.join(parents)
         newname = name
