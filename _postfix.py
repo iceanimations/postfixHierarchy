@@ -32,7 +32,7 @@ class PostfixHierarchyUI(object):
         rep = list(replaceable_words)
         rep.append(custom_postfix)
         postfixHierarchy(word=postfix, hier=self.hierBox.getValue(),
-                replaceable_words=custom_postfix)
+                replaceable_words=rep)
 
     def changeOption(self, *args):
         if self.postfixOption.getValue() == 'custom':
